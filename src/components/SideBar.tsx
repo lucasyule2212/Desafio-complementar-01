@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-interface ISideBarProps{
-  children: ReactNode
-}
+import { useMovies } from "../hooks/useMovies";
+import { Button } from "./Button";
 
-export function SideBar(props:ISideBarProps) {
+export function SideBar() {
   // Complete aqui
+  const { genres, handleClickButton, selectedGenreId } = useMovies();
   return (
     <nav className="sidebar">
       <span>
@@ -12,7 +12,15 @@ export function SideBar(props:ISideBarProps) {
       </span>
 
       <div className="buttons-container">
-        {props.children}
+        {genres.map((genre) => (
+          <Button
+            key={String(genre.id)}
+            title={genre.title}
+            iconName={genre.name}
+            onClick={() => handleClickButton(genre.id)}
+            selected={selectedGenreId === genre.id}
+          />
+        ))}
       </div>
     </nav>
   );
